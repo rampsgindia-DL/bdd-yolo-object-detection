@@ -48,7 +48,7 @@ Semantic segmentation and lane data are ignored.
 
 Script:
 
-python scripts/bdd_analysis_simple_28.py
+python scripts/bdd_analysis.py
 
 This performs:
 - JSON parsing  
@@ -57,11 +57,7 @@ This performs:
 - Bounding box anomaly detection  
 - Interactive dashboard  
 - Visualization of sample images  
-
-For fast execution, analysis is done on first 28 images only.
-
----
-
+Initially, for checking the function of the code, the analysis was done for 28 images and later used more number of images for prediction. 
 ## 4. Dataset Conversion (JSON → YOLO)
 
 Script:
@@ -167,7 +163,7 @@ python scripts/visualize.py
 
 ---
 
-## 11. Docker (Optional)
+## 11. Docker 
 
 Build:
 
@@ -186,6 +182,22 @@ docker run -it bdd-yolo
 - Use other models to improve the detection along with segmentation concepts
 - Class rebalancing
 
+## 13. Qualitative Results: Ground Truth vs Model Predictions
+The figure below shows qualitative examples of the trained YOLO model on the BDD100K validation dataset. For each sample, the original input image is compared with the model’s predicted bounding boxes.Sharing an sample image for better understanding. 
+**Key Strengths Observed**
+    *The model demonstrates strong performance on major traffic-related objects such as cars, persons, traffic lights, and traffic signs.
+    *It is able to detect multiple objects simultaneously within complex scenes.
+    * Bounding boxes are generally well-aligned with object boundaries, indicating good localization capability.
+    * The model performs consistently across different lighting conditions and road environments.
+    
+**Input Image**
+<img width="1191" height="652" alt="image" src="https://github.com/user-attachments/assets/df981b80-aa6d-4fd0-b238-0bb701dc9ae4" />
+
+**Predicted Image :**
+<img width="1183" height="622" alt="image" src="https://github.com/user-attachments/assets/aeacd27c-4d24-4b38-b193-102654ba2cf5" />
+
+
 
 ---
+
 
