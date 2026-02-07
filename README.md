@@ -1,71 +1,191 @@
-# bdd-yolo-object-detection
-A complete computer vision project implementing object detection on the BDD100K dataset using YOLOv8. Includes dataset analysis, JSON-to-YOLO conversion, model training, quantitative evaluation, and qualitative visualization.
+# BDD100K Object Detection using YOLOv8
 
-**Detailed Project Description**
+This project demonstrates an end-to-end pipeline for object detection using the BDD100K dataset.  
+It includes data analysis, dataset conversion, model training, evaluation, and visualization.
 
-This project implements a complete end-to-end object detection system using the BDD100K (Berkeley DeepDrive 100K) dataset and the YOLOv8 deep learning model.
+---
 
-The goal of the project is to design a reproducible machine learning pipeline that covers the full lifecycle of a real-world computer vision system, including:
+## 1. Project Structure
 
- * Dataset exploration and understanding
- * Data preprocessing and format conversion
- * Model selection and training
- * Quantitative evaluation using standard metrics
- * Qualitative visualization of model performance
- * Documentation and reproducibility
+bdd-object-detection-analysis/
+│
+├── images/
+│   ├── train/
+│   ├── val/
+│   └── test/
+│
+├── labels/
+│   ├── train/
+│   ├── val/
+│   └── test/
+│
+├── scripts/
+│   ├── bdd_analysis_simple_28.py
+│   ├── bdd_to_yolo.py
+│   ├── train_model.py
+│   ├── evaluate_model.py
+│   └── visualize.py
+│
+├── bdd.yaml
+├── runs/
+│   └── detect/train2/weights/best.pt
+│
+└── README.md
 
-**Problem Statement**
+---
 
-Autonomous driving systems rely heavily on accurate perception of objects such as cars, pedestrians, cyclists, traffic signs, and traffic lights. The BDD100K dataset provides large-scale annotated driving images to simulate this real-world scenario.
+## 2. Dataset
 
-This project focuses on solving the object detection problem, where the task is to:
+Dataset used: BDD100K (Berkeley DeepDrive 100K)  
+Website: https://bdd-data.berkeley.edu/
 
-  * Detect and localize objects in road images by predicting bounding boxes and class labels.
+We use only the object detection annotations (bounding boxes).  
+Semantic segmentation and lane data are ignored.
 
-**Model Selection**
+---
 
-The chosen model is **YOLOv8 (You Only Look Once v8) **from Ultralytics.
+## 3. Data Analysis
 
-YOLOv8 is selected because:
+Script:
 
- *It is a single-stage detector, enabling real-time performance
- *It provides strong accuracy with low latency
- *It comes with pretrained weights on COCO
- *It is widely used in industry and research
- *It supports easy training and deployment
- *The project uses transfer learning by fine-tuning pretrained YOLOv8 weights on the BDD100K dataset.
+python scripts/bdd_analysis_simple_28.py
 
- **Training Pipeline**
+This performs:
+- JSON parsing  
+- Class distribution analysis  
+- Train vs Validation comparison  
+- Bounding box anomaly detection  
+- Interactive dashboard  
+- Visualization of sample images  
 
-The training pipeline includes:
+For fast execution, analysis is done on first 28 images only.
 
-*Custom dataset loader using YOLO format
-*Pretrained backbone initialization
-*One-epoch training (for demonstration)
-*Automatic checkpoint saving
-*GPU/CPU compatibility
-The trained model is stored under:
+---
 
- runs/detect/train2/weights/best.pt
+## 4. Dataset Conversion (JSON → YOLO)
 
-**Evaluation**
-The model is evaluated on the validation dataset using standard object detection metrics:
+Script:
 
- *Precision – correctness of predicted detections
- *Recall – ability to find all relevant objects
- *mAP@0.5 – mean average precision at IoU threshold 0.5
- *F1-score – harmonic mean of precision and recall
+python scripts/bdd_to_yolo.py
 
-These metrics are chosen because they are widely accepted benchmarks in object detection research and industry.
+This converts:
+BDD JSON labels → YOLO format .txt labels
 
-**Key Findings
-**
-From both quantitative and qualitative analysis:
+Saved in:
 
- **Severe class imbalance** exists in BDD100K, with the car class accounting for the majority of annotations. This imbalance leads to biased learning and reduced performance on minority classes such as traffic signs and riders.
+labels/train/  
+labels/val/  
+labels/test/
 
- **Object scale strongly affects detection performance**. The model achieves high precision for large objects (cars, buses, trucks) but struggles significantly with small-scale objects like traffic lights and distant pedestrians.
+---
 
- **Occlusion is a dominant failure factor.** Pedestrians partially hidden by vehicles or infrastructure are frequently missed, indicating limitations in the model’s ability to reason under visual obstruction.
+## 5. Model Choice
 
- **High false positives occur in visually ambiguous regions**, such as reflections, shadows, and overlapping objects, highlighting the sensitivity of single-stage detectors to complex visual patterns.
+We use YOLOv8 (Ultralytics).
+
+Why YOLOv8:
+- Single-stage detector (fast)
+- Pretrained on COCO
+- Industry standard
+- Easy training and deployment
+
+---
+
+## 6. Training
+
+Script:
+
+python scripts/train_model.py
+
+Model saved at:
+
+runs/detect/train2/weights/best.pt
+
+---
+
+## 7. Evaluation
+
+Script:
+
+python scripts/evaluate_model.py
+
+Metrics used:
+- Precision
+- Recall
+- mAP@0.5
+- F1-score
+
+These metrics are standard for object detection.
+
+---
+
+## 8. Visualization
+
+Script:
+
+python scripts/visualize.py
+
+Shows:
+- Ground truth boxes
+- Predicted boxes
+- Failure cases
+- Missed detections
+
+This is qualitative analysis.
+
+---
+
+## 9. Key Observations
+
+From analysis and evaluation:
+
+- Dataset is highly imbalanced (car dominates)
+- Small objects have lower recall
+- Occluded pedestrians are hardest
+- Label quality impacts performance heavily
+
+---
+
+## 10. How to Run Everything (Order)
+
+Run scripts in this order:
+
+1. Data analysis  
+python scripts/bdd_analysis_simple_28.py  
+
+2. Convert dataset  
+python scripts/bdd_to_yolo.py  
+
+3. Train model  
+python scripts/train_model.py  
+
+4. Evaluate  
+python scripts/evaluate_model.py  
+
+5. Visualize  
+python scripts/visualize.py  
+
+---
+
+## 11. Docker (Optional)
+
+Build:
+
+docker build -t bdd-yolo .
+
+Run:
+
+docker run -it bdd-yolo
+
+---
+
+## 12. Future Improvements
+
+- Train on full dataset
+- Data augmentation
+- Use other models to improve the detection along with segmentation concepts
+- Class rebalancing
+
+
+---
+
