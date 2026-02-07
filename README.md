@@ -20,7 +20,7 @@ bdd-object-detection-analysis/
 │   └── test/
 │
 ├── scripts/
-│   ├── bdd_analysis_simple_28.py
+│   ├── bdd_analysis.py
 │   ├── bdd_to_yolo.py
 │   ├── train_model.py
 │   ├── evaluate_model.py
@@ -199,5 +199,6 @@ The figure below shows qualitative examples of the trained YOLO model on the BDD
 
 
 ---
+
 
 
