@@ -7,17 +7,12 @@ This project implements a complete end-to-end object detection system using the 
 
 The goal of the project is to design a reproducible machine learning pipeline that covers the full lifecycle of a real-world computer vision system, including:
 
-  Dataset exploration and understanding
-
-  Data preprocessing and format conversion
-
-  Model selection and training
-
-  Quantitative evaluation using standard metrics
-
-  Qualitative visualization of model performance
-
-  Documentation and reproducibility
+ * Dataset exploration and understanding
+ * Data preprocessing and format conversion
+ * Model selection and training
+ * Quantitative evaluation using standard metrics
+ * Qualitative visualization of model performance
+ * Documentation and reproducibility
 
 **Problem Statement**
 
@@ -25,4 +20,4 @@ Autonomous driving systems rely heavily on accurate perception of objects such a
 
 This project focuses on solving the object detection problem, where the task is to:
 
-  Detect and localize objects in road images by predicting bounding boxes and class labels.
+  * Detect and localize objects in road images by predicting bounding boxes and class labels.
