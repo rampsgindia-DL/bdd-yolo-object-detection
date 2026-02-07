@@ -1,0 +1,16 @@
+path: C:\Users\ramya\Desktop\BO_analysis\Final_Analysis\scripts\bdd100k_yolo
+train: images/train
+val: images/val
+
+nc: 10
+names:
+  - person
+  - car
+  - bus
+  - truck
+  - bike
+  - motor
+  - traffic light
+  - traffic sign
+  - train
+  - rider
